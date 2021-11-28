@@ -2,9 +2,10 @@
 #include "tritset.h"
 
 int main() {
-    TritSet set(1000);
-    set[9999] = True;
-    set[10000] = False;
-    std::cout << set[9999] << set[10000];
+    TritSet setA(100);
+    setA[0] = True;
+    TritSet setB(setA);
+    setA[10] = setB[150] = True;
+    cout << setB[0];
     return 0;
 }

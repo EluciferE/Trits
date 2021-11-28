@@ -12,45 +12,66 @@ using namespace std;
 
 #define uint unsigned int
 
+enum CountType {add, del};
 
-class TritSet{
+
+class TritSet {
 private:
-    static size_t set_size(size_t size);
-    static uint trit_value(Trit trit, size_t index);
-
     size_t num_size;
     size_t mem_size;
-    uint* set;
+    uint *set;
 
     size_t num_false;
     size_t num_true;
+    size_t last_trit;
 
-    class Proxy{
+    static size_t set_size(size_t size);
+    static uint trit_value(Trit trit, size_t index);
+    void count_trit(Trit trit, CountType type_);
+    void equal_sizes(TritSet& set1);
+    void extend_size(size_t size);
+
+    class Proxy {
     private:
-        TritSet* tritSet;
+        TritSet *tritSet;
         size_t index;
 
-        void extend_set(int new_size);
-
     public:
-        explicit Proxy(TritSet* trit_set, size_t ind);
-        void operator = (const Trit trit);
-        operator const Trit ();
+        explicit Proxy(TritSet *trit_set, size_t ind);
+        void operator=(const Trit trit);
+        operator const Trit();
     };
 
+public:
+    class Iterator{
+
+    private:
+        TritSet* tritSet;
+        size_t index_now;
+
     public:
-        Proxy operator[](size_t index);
-        size_t capacity();
+        explicit Iterator(TritSet* trit_set, size_t index);
+        Iterator operator++ ();
+        Iterator operator-- ();
+        bool operator==(const Iterator& iterator) const;
+        bool operator!=(const Iterator& iterator) const;
 
-        explicit TritSet(size_t size);
+        Proxy operator*();
+    };
+    Iterator begin();
+    Iterator end();
 
+    Proxy operator[](size_t index);
+    TritSet operator|(TritSet& set1);
+    TritSet operator&(TritSet& set1);
+    TritSet operator~();
+
+    size_t capacity();
+    size_t cardinality(Trit value);
+    explicit TritSet(size_t size);
 
 
 };
-
-
-
-
 
 
 #endif //TRITS_TRITSET_H
