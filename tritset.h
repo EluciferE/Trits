@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <cstring>
+#include <unordered_map>
 
 #include "trit.h"
 
@@ -11,6 +12,8 @@ using namespace std;
 
 
 #define uint unsigned int
+#define TRIT_IN_UINT (size_t) (sizeof(uint) * 4)
+#define BIT_IN_UINT (size_t) (sizeof(uint) * 8)
 
 enum CountType {add, del};
 
@@ -19,17 +22,18 @@ class TritSet {
 private:
     size_t num_size;
     size_t mem_size;
-    uint *set;
+    size_t basic_size;
 
     size_t num_false;
     size_t num_true;
-    size_t last_trit;
+    size_t logical_length;
 
-    static size_t set_size(size_t size);
-    static uint trit_value(Trit trit, size_t index);
-    void count_trit(Trit trit, CountType type_);
+    static size_t set_size(const size_t size);
+    static uint trit_value(const Trit trit, const size_t index);
+    void count_trit(const Trit trit, const CountType type_);
     void equal_sizes(TritSet& set1);
-    void extend_size(size_t size);
+    void extend_size(const size_t size);
+    void copy_class(const TritSet& tritSet);
 
     class Proxy {
     private:
@@ -43,6 +47,7 @@ private:
     };
 
 public:
+    uint *set;
     class Iterator{
 
     private:
@@ -51,26 +56,35 @@ public:
 
     public:
         explicit Iterator(TritSet* trit_set, size_t index);
+
+        Proxy operator*();
+
         Iterator operator++ ();
         Iterator operator-- ();
+
         bool operator==(const Iterator& iterator) const;
         bool operator!=(const Iterator& iterator) const;
 
-        Proxy operator*();
+
     };
     Iterator begin();
     Iterator end();
 
-    Proxy operator[](size_t index);
+    Proxy operator[](const size_t index);
     TritSet operator|(TritSet& set1);
     TritSet operator&(TritSet& set1);
     TritSet operator~();
 
-    size_t capacity();
-    size_t cardinality(Trit value);
+    [[nodiscard]] size_t capacity() const;
+    [[nodiscard]] size_t cardinality(const Trit value) const;
+    [[nodiscard]] size_t length() const;
+
+    std::unordered_map< Trit, int, std::hash<int>> cardinality() const;
+
+    void shrink();
+    void trim(size_t lastIndex);
     explicit TritSet(size_t size);
-
-
+    TritSet(const TritSet& tritSet);
 };
 
 
