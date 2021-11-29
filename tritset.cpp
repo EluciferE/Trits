@@ -275,10 +275,6 @@ TritSet::Proxy::operator const Trit() {
     return Trit(ans);
 }
 
-TritSet::Proxy TritSet::Iterator::operator*() {
-    return (*tritSet)[index_now];
-}
-
 // Iterator ----------------------
 TritSet::Iterator::Iterator(TritSet *trit_set, size_t index) : tritSet(trit_set), index_now(index) {}
 
@@ -300,6 +296,10 @@ bool TritSet::Iterator::operator==(const TritSet::Iterator &iterator) const {
 
 bool TritSet::Iterator::operator!=(const TritSet::Iterator &iterator) const {
     return !(*this == iterator);
+}
+
+TritSet::Proxy TritSet::Iterator::operator*() {
+    return (*tritSet)[index_now];
 }
 
 TritSet::Iterator TritSet::begin() {
