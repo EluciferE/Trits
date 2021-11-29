@@ -1,11 +1,7 @@
-#include <iostream>
-#include "tritset.h"
+#include <gtest/gtest.h>
 
 int main() {
-    TritSet setA(100);
-    setA[0] = True;
-    TritSet setB(setA);
-    setA[10] = setB[150] = True;
-    cout << setB[0];
+    testing::InitGoogleTest();
+    int result = RUN_ALL_TESTS();
     return 0;
 }
