@@ -74,6 +74,7 @@ public:
     TritSet operator|(TritSet& set1);
     TritSet operator&(TritSet& set1);
     TritSet operator~();
+    Trit operator[](const size_t index) const;
 
     [[nodiscard]] size_t capacity() const;
     [[nodiscard]] size_t cardinality(const Trit value) const;

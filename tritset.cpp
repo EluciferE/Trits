@@ -209,7 +209,7 @@ TritSet::TritSet(const TritSet &tritSet) {
     copy_class(tritSet);
 
     if (mem_size) {
-        set = new uint(mem_size);
+        set = new uint[mem_size];
         if (tritSet.set)
             memmove(set, tritSet.set, mem_size * sizeof(uint));
     }
@@ -308,4 +308,17 @@ TritSet::Iterator TritSet::begin() {
 
 TritSet::Iterator TritSet::end() {
     return TritSet::Iterator(this, num_size);
+}
+
+Trit TritSet::operator[](const size_t index) const {
+    if (!set || num_size < index)
+        return Unknown;
+
+    size_t num_byte = index / TRIT_IN_UINT;
+    size_t num_bits = (index % TRIT_IN_UINT) * 2;
+
+
+    size_t ans = (set[num_byte] << num_bits);
+    ans = ans >> (BIT_IN_UINT - 2);
+    return Trit(ans);
 }
