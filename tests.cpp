@@ -188,3 +188,11 @@ TEST (ExtremePoints, ZeroSize){
     setA.shrink();
     GTEST_ASSERT_EQ(setA.capacity(), 0);
 }
+
+TEST (Operators, ConstOperator){
+    TritSet setA(100);
+    setA[0] = False;
+
+    const TritSet setB = setA;
+    GTEST_ASSERT_EQ(setB[0], False);
+}
