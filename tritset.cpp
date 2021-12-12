@@ -171,7 +171,7 @@ void TritSet::shrink() {
     if (set[last_byte])
         last_byte++;
 
-    size_t new_size = max(last_byte * TRIT_IN_UINT, basic_size);
+    size_t new_size = std::max(last_byte * TRIT_IN_UINT, basic_size);
     size_t new_mem_size = set_size(new_size);
     if (!new_mem_size) {
         set = nullptr;
@@ -248,7 +248,7 @@ void TritSet::Proxy::operator=(const Trit trit) {
 
 
     if (trit != Unknown)
-        tritSet->logical_length = max(tritSet->logical_length, index + 1);
+        tritSet->logical_length = std::max(tritSet->logical_length, index + 1);
 
         // find new logical_length
     else if (index + 1 == tritSet->logical_length) {

@@ -8,18 +8,16 @@
 
 #include "trit.h"
 
-using namespace std;
-
-
-#define uint unsigned int
-#define TRIT_IN_UINT (size_t) (sizeof(uint) * 4)
-#define BIT_IN_UINT (size_t) (sizeof(uint) * 8)
+using uint = unsigned int;
 
 enum CountType {add, del};
 
 
 class TritSet {
 private:
+    static constexpr size_t TRIT_IN_UINT = sizeof(uint) * 4;
+    static constexpr size_t BIT_IN_UINT = sizeof(uint) * 8;
+
     size_t num_size;
     size_t mem_size;
     size_t basic_size;
