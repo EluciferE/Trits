@@ -196,3 +196,10 @@ TEST (Operators, ConstOperator){
     const TritSet setB = setA;
     GTEST_ASSERT_EQ(setB[0], False);
 }
+
+// I don't know how to test it...
+// std::cout << "MOVE CALLED"; works
+TEST (Operators, MoveConstructor){
+    TritSet new_set = id(TritSet(1000));
+    GTEST_ASSERT_GE(new_set.capacity(), 1000);
+}

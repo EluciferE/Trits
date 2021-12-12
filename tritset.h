@@ -29,7 +29,6 @@ private:
     static size_t set_size(const size_t size);
     static uint trit_value(const Trit trit, const size_t index);
     void count_trit(const Trit trit, const CountType type_);
-    void equal_sizes(TritSet& set1);
     void extend_size(const size_t size);
     void copy_class(const TritSet& tritSet);
 
@@ -83,9 +82,11 @@ public:
     void shrink();
     void trim(size_t lastIndex);
     explicit TritSet(size_t size);
+    TritSet(TritSet&& set1);
     TritSet(const TritSet& tritSet);
     ~TritSet();
 };
 
+TritSet id(TritSet set1);
 
 #endif //TRITS_TRITSET_H

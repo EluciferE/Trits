@@ -44,15 +44,6 @@ void TritSet::count_trit(const Trit trit, const CountType type_) {
     }
 }
 
-// Lead tritSets to one size
-void TritSet::equal_sizes(TritSet &set1) {
-    if (capacity() > set1.capacity())
-        set1.extend_size(capacity());
-    else if (capacity() < set1.capacity())
-        extend_size(set1.capacity());
-    return;
-}
-
 // Extend size of set in TritSet
 void TritSet::extend_size(const size_t new_size) {
     size_t new_mem_size = set_size(new_size);
@@ -225,6 +216,25 @@ TritSet::TritSet(const TritSet &tritSet) {
         if (tritSet.set)
             memmove(set, tritSet.set, mem_size * sizeof(uint));
     }
+    else
+        set = nullptr;
+}
+
+TritSet::~TritSet() {
+    delete[] set;
+}
+
+// Move constructor
+TritSet::TritSet(TritSet &&set1) {
+    copy_class(set1);
+
+    if (mem_size) {
+        set = new uint[mem_size];
+        if (set1.set)
+            memmove(set, set1.set, mem_size * sizeof(uint));
+    }
+    else
+        set = nullptr;
 }
 
 // Proxy operators ----------------------
@@ -333,6 +343,8 @@ Trit TritSet::operator[](const size_t index) const {
     return Trit(ans);
 }
 
-TritSet::~TritSet() {
-    delete[] set;
+// Test func
+
+TritSet id(TritSet set){
+    return set;
 }
