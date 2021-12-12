@@ -70,6 +70,7 @@ void TritSet::extend_size(const size_t new_size) {
     if (set)
         memmove(new_set, set, mem_size * sizeof(uint));
 
+    delete[] set;
     set = new_set;
     mem_size = new_mem_size;
     num_size = new_mem_size * TRIT_IN_UINT;
@@ -185,6 +186,7 @@ void TritSet::shrink() {
     if (set)
         memmove(new_set, set, new_mem_size * sizeof(uint));
 
+    delete[] set;
     set = new_set;
     mem_size = new_mem_size;
     num_size = new_size;
