@@ -64,8 +64,7 @@ void TritSet::extend_size(const size_t new_size) {
         return;
     }
 
-    uint *new_set = new uint[new_mem_size];
-    memset(new_set, 0, new_mem_size * sizeof(uint));
+    uint *new_set = new uint[new_mem_size]();
 
     if (set)
         memmove(new_set, set, mem_size * sizeof(uint));
@@ -180,9 +179,8 @@ void TritSet::shrink() {
         num_size = 0;
         return;
     }
-    uint *new_set = new uint[new_mem_size];
+    uint *new_set = new uint[new_mem_size]();
 
-    memset(new_set, 0, new_mem_size * sizeof(uint));
     if (set)
         memmove(new_set, set, new_mem_size * sizeof(uint));
 
@@ -232,10 +230,8 @@ void TritSet::Proxy::operator=(const Trit trit) {
     tritSet->count_trit(trit, add);
 
     // If first allocate
-    if (!tritSet->set && tritSet->mem_size) {
-        tritSet->set = new uint[tritSet->mem_size];
-        memset(tritSet->set, 0, tritSet->mem_size * sizeof(uint));
-    }
+    if (!tritSet->set && tritSet->mem_size)
+        tritSet->set = new uint[tritSet->mem_size]();
 
     // Need new allocate
     if (tritSet->num_size + 1 < index) {
