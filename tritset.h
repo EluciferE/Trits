@@ -69,9 +69,9 @@ public:
     Iterator end();
 
     Proxy operator[](const size_t index);
-    TritSet operator|(TritSet& set1);
-    TritSet operator&(TritSet& set1);
-    TritSet operator~();
+    TritSet operator|(TritSet& set1) const;
+    TritSet operator&(TritSet& set1) const;
+    TritSet operator~() const;
     Trit operator[](const size_t index) const;
 
     [[nodiscard]] size_t capacity() const;

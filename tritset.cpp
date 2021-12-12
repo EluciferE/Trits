@@ -94,35 +94,47 @@ TritSet::Proxy TritSet::operator[](const size_t index) {
     return TritSet::Proxy(this, index);
 }
 
-TritSet TritSet::operator|(TritSet &set1) {
-    equal_sizes(set1);
-
+TritSet TritSet::operator|(TritSet &set1) const{
     Trit t1, t2;
-    TritSet result(capacity());
+    size_t size1 = this->capacity(), size2 = set1.capacity();
+
+    TritSet result(std::max(size1, size2));
     for (size_t i = 0; i < capacity(); i++) {
-        t1 = (*this)[i];
-        t2 = set1[i];
+        t1 = Unknown;
+        t2 = Unknown;
+
+        if (size1 >= i)
+            t1 = (*this)[i];
+        if (size2 >= i)
+            t2 = set1[i];
+
         result[i] = t1 | t2;
     }
 
     return result;
 }
 
-TritSet TritSet::operator&(TritSet &set1) {
-    equal_sizes(set1);
-
+TritSet TritSet::operator&(TritSet &set1) const{
     Trit t1, t2;
-    TritSet result(capacity());
+    size_t size1 = this->capacity(), size2 = set1.capacity();
+
+    TritSet result(std::max(size1, size2));
     for (size_t i = 0; i < capacity(); i++) {
-        t1 = (*this)[i];
-        t2 = set1[i];
+        t1 = Unknown;
+        t2 = Unknown;
+
+        if (size1 >= i)
+            t1 = (*this)[i];
+        if (size2 >= i)
+            t2 = set1[i];
+
         result[i] = t1 & t2;
     }
 
     return result;
 }
 
-TritSet TritSet::operator~() {
+TritSet TritSet::operator~() const{
     TritSet result(capacity());
     for (size_t i = 0; i < capacity(); i++)
         result[i] = ~(*this)[i];
