@@ -324,3 +324,7 @@ Trit TritSet::operator[](const size_t index) const {
     ans = ans >> (BIT_IN_UINT - 2);
     return Trit(ans);
 }
+
+TritSet::~TritSet() {
+    delete[] set;
+}

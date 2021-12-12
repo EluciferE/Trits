@@ -84,6 +84,7 @@ public:
     void trim(size_t lastIndex);
     explicit TritSet(size_t size);
     TritSet(const TritSet& tritSet);
+    ~TritSet();
 };
 
 
